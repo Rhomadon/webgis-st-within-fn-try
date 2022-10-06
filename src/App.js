@@ -1,6 +1,9 @@
 import './App.css';
-import { MapContainer, TileLayer } from 'react-leaflet'
-import Within from './components/Within';
+import { MapContainer, TileLayer, LayersControl } from 'react-leaflet'
+import LiquiditySell from './components/LiquiditySell';
+import LiquidityRent from './components/LiquidityRent';
+import PropertySell from './components/PropertySell';
+import PropertyRent from './components/PropertyRent';
 
 function App() {
 
@@ -11,7 +14,12 @@ function App() {
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Within/>
+      <LayersControl position="topright">
+        <LiquiditySell />
+        <LiquidityRent />
+        <PropertySell />
+        <PropertyRent />
+      </LayersControl>
     </MapContainer>
   )
 }
