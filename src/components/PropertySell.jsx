@@ -7,6 +7,7 @@ import markerClusterGroup from 'leaflet.markercluster'
 
 export default function PropertySell() {
 	const [features, setFeatures] = useState([])
+	const geojson = features
 
 	const axiosData = () => {
 		const url = 'http://localhost:4000/property-sell/api'
@@ -41,22 +42,30 @@ export default function PropertySell() {
 		return markers.addLayer(L.marker(latlng, {draggable: true}))
 	}
 
-	const handleFeature = (layer) => {
-		let popupContent =
-			"<pre>" +
-			JSON.stringify(layer.feature.properties, null, " ").replace(/[\{\}"]/g, "") +
-				"</pre>"
-
-			layer.bindPopup(popupContent)
-	}
-
-
-
 	const eventHandlers = {
-		mousemove(e) {
-			console.log(e.latlng)
-		}
+		mouseup: (e) => {
 
+			let count = geojson.features.length - 1
+			let lat = e.layer._latlng.lat
+			let lng = e.layer._latlng.lng
+			let coordinates = geojson.features
+
+			for (let a = 0; a <= count; a++) {
+				let Lat = coordinates[a].geometry.coordinates[1]
+				let Lng = coordinates[a].geometry.coordinates[0]
+
+				if (lat === Lat && lng === Lng) {
+
+					let popupContent =
+						"<pre>" +
+						JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
+						"</pre>"
+
+					e.layer.bindPopup(popupContent)
+
+				}
+			}
+		}
 	}
 
 	return (
@@ -65,16 +74,7 @@ export default function PropertySell() {
 				data={features}
 				ref={geoJsonLayerRef}
 				eventHandlers={eventHandlers}
-				onEachFeature={(feature, layer) => handleFeature(layer)}
 				pointToLayer={pointToLayer}
-				style={() => ({
-					color: '#4a83ec',
-					weight: 0.5,
-					fillColor: "#1a1d",
-					fillOpacity: 0.7,
-					opacity: 0.5,
-					radius: 8,
-          })}
 			/>
 		</LayersControl.Overlay>
 	)
