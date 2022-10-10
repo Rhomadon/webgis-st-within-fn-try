@@ -10,7 +10,7 @@ export default function PropertyRent() {
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:4000/property-rent/api'
+		const url = 'http://localhost:5000/property-rent/api'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {
@@ -39,7 +39,7 @@ export default function PropertyRent() {
 	const markers = L.markerClusterGroup()
 
 	const pointToLayer = (feature, latlng) => {
-		return markers.addLayer(L.marker(latlng, {draggable: true}))
+		return markers.addLayer(L.marker(latlng, { draggable: true }))
 	}
 
 	const eventHandlers = {
@@ -51,15 +51,14 @@ export default function PropertyRent() {
 			let coordinates = geojson.features
 
 			for (let a = 0; a <= count; a++) {
+				let popupContent =
+					"<pre>" +
+					JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
+					"</pre>"
 				let Lat = coordinates[a].geometry.coordinates[1]
 				let Lng = coordinates[a].geometry.coordinates[0]
 
 				if (lat === Lat && lng === Lng) {
-
-					let popupContent =
-						"<pre>" +
-						JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
-						"</pre>"
 
 					e.layer.bindPopup(popupContent)
 

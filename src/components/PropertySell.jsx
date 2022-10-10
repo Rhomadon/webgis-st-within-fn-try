@@ -10,7 +10,7 @@ export default function PropertySell() {
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:4000/property-sell/api'
+		const url = 'http://localhost:5000/property-sell/api'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {
@@ -42,6 +42,14 @@ export default function PropertySell() {
 		return markers.addLayer(L.marker(latlng, {draggable: true}))
 	}
 
+	const popup = (e, a) => {
+		let popupContent =
+			"<pre>" +
+			JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
+			"</pre>"
+		e.layer.bindPopup(popupContent)
+	}
+
 	const eventHandlers = {
 		mouseup: (e) => {
 
@@ -56,15 +64,12 @@ export default function PropertySell() {
 
 				if (lat === Lat && lng === Lng) {
 
-					let popupContent =
-						"<pre>" +
-						JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
-						"</pre>"
-
-					e.layer.bindPopup(popupContent)
+					popup(e, a)
 
 				}
 			}
+			console.log(e.latlng);
+
 		}
 	}
 

@@ -10,7 +10,7 @@ export default function LiquiditySell() {
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:4000/liquidity-sell/api'
+		const url = 'http://localhost:5000/liquidity-sell/api'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {
@@ -42,29 +42,67 @@ export default function LiquiditySell() {
 		return markers.addLayer(L.marker(latlng, {draggable: true}))
 	}
 
+	const popup = (e,a) => {
+		let popupContent =
+			"<pre>" +
+			JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
+			"</pre>"
+		e.layer.bindPopup(popupContent)
+	}
+
+	const ptsWithinPlgn = (e, lat, lng, Lat, Lng) => {
+		if (lat === Lat && lng === Lng) {
+			let query = 'SELECT a.id POINT_ID_WITHIN_POLYGONS FROM sample_points a, sample_polygons b WHERE ST_Within(b.geometry, a.geometry)'
+			let text = `ST_AsText(ST_GeomFromGeoJSON(`+ geoPolygon +`)) As wkt`
+
+		}
+	}
+
+	const geoPolygon = {
+		"type": "FeatureCollection", "features": [
+			{
+				"type": "Feature",
+				"geometry": {
+					"type": "Polygon",
+					"coordinates": [
+						[-6.171458331177864, 106.82324790577107],
+						[-6.171582546806833, 106.8292918647082],
+						[-6.173003260992031, 106.82910445512874],
+						[-6.173465212895221, 106.82998437981179],
+						[-6.177748243451104, 106.82988624915535],
+						[-6.178477150029734, 106.83071826799736],
+						[-6.178883978004937, 106.8304454646428],
+						[-6.180096693894435, 106.83145894962195],
+						[-6.1804779200411275, 106.82297806182642],
+						[-6.171458331177864, 106.82324790577107]]
+				},
+				"properties": {
+					"objectid": 1,
+					"name": "Monumen Nasional",
+					"type": "Polygon",
+				}
+			}
+		]
+	}
+
 	const eventHandlers = {
 		mouseup: (e) => {
 
 			let count = geojson.features.length - 1
 			let lat = e.layer._latlng.lat
 			let lng = e.layer._latlng.lng
-			let coordinates = geojson.features
 
 			for (let a = 0; a <= count; a++) {
-				let Lat = coordinates[a].geometry.coordinates[1]
-				let Lng = coordinates[a].geometry.coordinates[0]
+				let coordinates = geojson.features[a].geometry.coordinates
+				let Lat = coordinates[1]
+				let Lng = coordinates[0]
 
 				if (lat === Lat && lng === Lng) {
-
-					let popupContent =
-						"<pre>" +
-						JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
-						"</pre>"
-
-					e.layer.bindPopup(popupContent)
-
+					popup(e,a)
+					ptsWithinPlgn(e, lat, lng, Lat, Lng)
 				}
 			}
+			console.log(e.latlng)
 		}
 	}
 

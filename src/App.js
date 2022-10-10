@@ -4,6 +4,7 @@ import LiquiditySell from './components/LiquiditySell';
 import LiquidityRent from './components/LiquidityRent';
 import PropertySell from './components/PropertySell';
 import PropertyRent from './components/PropertyRent';
+import PolygonMonas from './components/PolygonMonas';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <PropertySell />
         <PropertyRent />
       </LayersControl>
+      <PolygonMonas />
     </MapContainer>
   )
 }

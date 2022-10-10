@@ -10,7 +10,7 @@ export default function LiquidityRent() {
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:4000/liquidity-rent/api'
+		const url = 'http://localhost:5000/liquidity-rent/api'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {
@@ -39,7 +39,15 @@ export default function LiquidityRent() {
 	const markers = L.markerClusterGroup()
 
 	const pointToLayer = (feature, latlng) => {
-		return markers.addLayer(L.marker(latlng, {draggable: true}))
+		return markers.addLayer(L.marker(latlng, { draggable: true }))
+	}
+
+	const popup = (e, a) => {
+		let popupContent =
+			"<pre>" +
+			JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
+			"</pre>"
+		e.layer.bindPopup(popupContent)
 	}
 
 	const eventHandlers = {
@@ -56,12 +64,7 @@ export default function LiquidityRent() {
 
 				if (lat === Lat && lng === Lng) {
 
-					let popupContent =
-						"<pre>" +
-						JSON.stringify(geojson.features[a].properties, null, " ").replace(/[\{\}"]/g, "") +
-						"</pre>"
-
-					e.layer.bindPopup(popupContent)
+					popup(e, a)
 
 				}
 			}
