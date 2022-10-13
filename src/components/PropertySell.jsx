@@ -10,7 +10,7 @@ export default function PropertySell() {
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:5000/property-sell/api'
+		const url = 'http://localhost:5000/property-sell'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {

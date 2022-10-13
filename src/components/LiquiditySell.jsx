@@ -10,7 +10,7 @@ export default function LiquiditySell() {
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:5000/liquidity-sell/api'
+		const url = 'http://localhost:5000/liquidity-sell'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {

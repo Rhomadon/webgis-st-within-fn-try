@@ -16,12 +16,13 @@ function App() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <LayersControl position="topright">
-        <LiquiditySell />
-        <LiquidityRent />
+        {/* <LiquiditySell /> */}
+        {/* <LiquidityRent /> */}
         <PropertySell />
-        <PropertyRent />
+        {/* <PropertyRent /> */}
+        <PolygonMonas/>
       </LayersControl>
-      <PolygonMonas />
+      {/* <PolygonMonas /> */}
     </MapContainer>
   )
 }
