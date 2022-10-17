@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { GeoJSON, Polygon, LayersControl } from 'react-leaflet'
 import axios from 'axios'
 
-export default function PolygonMonas() {
+export default function PlsWithinPly() {
 	const [features, setFeatures] = useState([])
 
 	const axiosData = () => {
-		const url = 'http://localhost:5000/polygon-monas'
+		const url = 'http://localhost:5000/ptswithinply'
 		axios.get(url).then(res => {
-			setFeatures(res.data.features[0])
+			setFeatures(res.data)
 		}).catch(err => {
 			console.log(err.message)
 		})
@@ -27,14 +26,16 @@ export default function PolygonMonas() {
 	useEffect(() => {
 		const layer = geoJsonLayerRef.current
 		if (layer) {
-			console.log("Api Polygon Monas")
+			console.log("Api Points_Test")
 			layer.clearLayers().addData(features)
 		}
 	}, [features])
 
 	return (
-		<LayersControl.Overlay name="Polygon Monas">
-			<GeoJSON data={features} ref={geoJsonLayerRef} />
-		</LayersControl.Overlay>
+		<div>
+			{
+				console.log(features.rows)
+			}
+		</div>
 	)
 }

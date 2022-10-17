@@ -5,6 +5,8 @@ import LiquidityRent from './components/LiquidityRent';
 import PropertySell from './components/PropertySell';
 import PropertyRent from './components/PropertyRent';
 import PolygonMonas from './components/PolygonMonas';
+import PointsTest from './components/PointsTest';
+import PtsWithinPly from './components/PtsWithinPly';
 
 function App() {
 
@@ -18,8 +20,10 @@ function App() {
       <LayersControl position="topright">
         {/* <LiquiditySell /> */}
         {/* <LiquidityRent /> */}
-        <PropertySell />
+        {/* <PropertySell /> */}
         {/* <PropertyRent /> */}
+        <PtsWithinPly/>
+        <PointsTest/>
         <PolygonMonas/>
       </LayersControl>
       {/* <PolygonMonas /> */}

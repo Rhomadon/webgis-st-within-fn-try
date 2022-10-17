@@ -5,12 +5,12 @@ import * as L from 'leaflet'
 import 'leaflet-path-drag';
 import markerClusterGroup from 'leaflet.markercluster'
 
-export default function PropertySell() {
+export default function PointsTest() {
 	const [features, setFeatures] = useState([])
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:5000/property-sell'
+		const url = 'http://localhost:5000/points_test'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {
@@ -31,7 +31,7 @@ export default function PropertySell() {
 	useEffect(() => {
 		const layer = geoJsonLayerRef.current
 		if (layer) {
-			console.log("Api Property-Sell")
+			console.log("Api Points_Test")
 			layer.clearLayers().addData(features)
 		}
 	}, [features])
@@ -71,7 +71,7 @@ export default function PropertySell() {
 	}
 
 	return (
-		<LayersControl.Overlay name="Property Sell">
+		<LayersControl.Overlay name="Points Test">
 			<GeoJSON
 				data={features}
 				ref={geoJsonLayerRef}
