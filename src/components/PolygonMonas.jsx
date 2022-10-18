@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { GeoJSON, Polygon, LayersControl } from 'react-leaflet'
+import { GeoJSON, LayersControl } from 'react-leaflet'
 import axios from 'axios'
 
 export default function PolygonMonas() {

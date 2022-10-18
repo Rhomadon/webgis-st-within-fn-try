@@ -10,7 +10,7 @@ export default function PointsTest() {
 	const geojson = features
 
 	const axiosData = () => {
-		const url = 'http://localhost:5000/points_test'
+		const url = 'http://localhost:5000/points-test'
 		axios.get(url).then(res => {
 			setFeatures(res.data)
 		}).catch(err => {
